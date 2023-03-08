@@ -1,0 +1,34 @@
+{
+  "name": "tech_blog",
+  "version": "1.0.0",
+  "description": "A CMS-style blog where you can publish articles, blog post, and more",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FranklynSuriel/Tech_Blog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FranklynSuriel/Tech_Blog/issues"
+  },
+  "homepage": "https://github.com/FranklynSuriel/Tech_Blog#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "connect-session-sequelize": "^7.1.5",
+    "dotenv": "^16.0.3",
+    "eslint-config-wesbos": "^3.2.3",
+    "express-handlebars": "^7.0.1",
+    "express-session": "^1.17.3",
+    "mysql2": "^3.2.0",
+    "sequelize": "^6.29.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
+}
