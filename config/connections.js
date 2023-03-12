@@ -1,6 +1,9 @@
 // import packages
 require('dotenv').config();
 const Sequelize = require('sequelize');
+const session = require('express-session');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+
 
 // create connection to the database
 const sequelize = process.env.JAWSDB_URL
@@ -19,5 +22,18 @@ const sequelize = process.env.JAWSDB_URL
     }
   );
 
+const expressSessionConfig = {
+  secret: process.env.SESSION_SECRET,
+  cookie: {},
+  resave: false,
+  saveUninitialized: true,
+  store: new SequelizeStore({
+    db: sequelize,
+  }),
+};
+
 // export.module
-module.exports = sequelize;
+module.exports = {
+  sequelize,
+  expressSessionConfig,
+};
