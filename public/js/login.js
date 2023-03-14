@@ -50,9 +50,9 @@ async function handleLogin(event) {
   });
 
   if (response.ok) {
-    console.log('it worked');
+    document.location.replace('/');
   } else {
-    console.log('it did not work');
+    alert('failed to log in. Please try again.');
   }
 
   loginForm.reset();

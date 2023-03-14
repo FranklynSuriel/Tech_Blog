@@ -1,14 +1,18 @@
 const logoutUser = document.querySelector('#logout');
 
-function handleLogout() {
-  fetch('/api/logout', {
-    method: 'post',
-    headers: { 'Content-Type': 'application/json' },
-  })
-    .then(() => {
-      document.location.replace('/');
-    })
-    .catch((err) => console.log(err));
-}
+const logout = async () => {
+  const response = await fetch('/api/logout', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  if (response.ok) {
+    console.log(response);
+    document.location.replace('/');
+  } else {
+    alert('Failed to log out.');
+  }
+};
 
-logoutUser.addEventListener('click', handleLogout);
+logoutUser.addEventListener('click', logout);

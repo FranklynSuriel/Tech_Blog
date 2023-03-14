@@ -26,9 +26,9 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isEmail: true
+        isEmail: true,
       },
-    },    
+    },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -51,7 +51,6 @@ User.init(
         return updatedUserData;
       },
     },
-
     sequelize,
     timestamps: true,
     freezeTableName: true,

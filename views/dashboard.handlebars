@@ -1,0 +1,44 @@
+<div>
+
+    {{!-- <div class="mb-3">
+        <label for="formGroupExampleInput" class="form-label">Example label</label>
+        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input placeholder">
+    </div>
+    <div class="mb-3">
+        <label for="formGroupExampleInput2" class="form-label">Another label</label>
+        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder">
+    </div> --}}
+
+    <div class="mb-3">
+        <label for="newPostTitle" class="form-label">Title:</label>
+        <input type="text" class="form-control" name="newPost" id="postTitle">
+    </div>
+    <div class="mb-3">
+        <label for="newPostContent" class="form-label">Content:</label>
+        <input type="text" class="form-control" name="newPost" id="postContent">
+    </div>
+    <div>
+        <button class="newPostBtn" type="submit">Create Post</button>
+    </div>
+</div>
+
+<div class="posts">
+    {{!-- {{#each home}} --}}
+    <div class="card">
+        <div class="card-body">
+            <h2>
+                <a href="/post{{id}}">{{title}}</a>
+            </h2>
+            <div>
+                Posted by {{User.Username}} on {{format_date createdAt}}
+            </div>
+            <div class="cardBody">
+                {{content}}
+            </div>
+        </div>
+    </div>
+    {{!-- {{/each}} --}}
+</div>
+
+
+<script src="/js/dashboard.js"></script>

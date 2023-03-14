@@ -1,0 +1,18 @@
+[
+    {
+        "title": "Nodejs",
+        "content": "Node.js is a back-end JavaScript runtime environment, runs on the V8 JavaScript Engine, and executes JavaScript code outside a web"
+    },
+    {
+        "title": "Express.js",
+        "content": "is a back end web application framework for building RESTful APIs with Node.js"
+    },
+    {
+        "title": "Nodemon",
+        "content": "nodemon is a tool that helps develop Node.js based applications by automatically restarting the node application when file changes in the directory are detected."
+    },
+    {
+        "title": "Inquirer.js",
+        "content": " collection of common interactive command line user interfaces."
+    }
+]

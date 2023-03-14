@@ -1,6 +1,6 @@
 // import packages
 const router = require('express').Router();
-const { User } = require('../../models');
+const { User, Post } = require('../../models');
 
 router.post('/login', async (req, res) => {
   try {
@@ -51,8 +51,19 @@ router.post('/logout', (req, res) => {
     req.session.destroy(() => {
       res.status(204).end();
     });
+    // res.redirect('/');
   } else {
     res.status(404).end();
+  }
+});
+
+router.post('/dashboard', async (req, res) => {
+  try {
+    const newPost = await Post.create(req.body);
+
+    res.status(201).json(newPost);
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong' });
   }
 });
 
