@@ -3,6 +3,7 @@ const loginForm = document.querySelector('.login-form');
 
 async function handleSignup(event) {
   event.preventDefault();
+  
 
   const userNameValue = document.querySelector('#username-signup').value.trim();
   const passwordValue = document.querySelector('#password-signup').value.trim();
