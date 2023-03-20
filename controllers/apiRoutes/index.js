@@ -36,6 +36,10 @@ router.post('/signup', async (req, res) => {
     const dbUser = await User.create(req.body);
     const plainUser = dbUser.get({ plain: true });
 
+    if (!dbUser) {
+      return res.status(404).json({ message: 'Invalid username or password' });
+    }
+
     req.session.save(() => {
       req.session.loggedIn = true;
       res.status(201).json({ plainUser });

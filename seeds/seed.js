@@ -27,31 +27,9 @@ const seedDatabase = async () => {
     await Comments.create({
       ...comment,
       user_id: users[Math.floor(Math.random() * users.length)].id,
-      // post_id: comment[Math.floor(Math.random() * comment.length)].id,
+      // post_id: post[Math.floor(Math.random() * comment.length)].id,
     });
   }
-
-  // await userData.forEach((user) => {
-  //   sequelize.sync({ force: true });
-  //   const users = User.create(user, {
-  //     individualHooks: true,
-  //     returning: true,
-  //   });
-  // });
-  // await postData.forEach((post) => {
-  //   sequelize.sync({ force: true });
-  //   const posts = Post.create(post, {
-  //     individualHooks: true,
-  //     returning: true,
-  //   });
-  // });
-  // await commentData.forEach((comment) => {
-  //   sequelize.sync({ force: true });
-  //   const comments = Comments.create(comment, {
-  //     individualHooks: true,
-  //     returning: true,
-  //   });
-  // });
 
   process.exit(0);
 };

@@ -24,8 +24,10 @@ async function handleSignup(event) {
   });
 
   if (response.ok) {
+    document.location.replace('/');
     console.log('it worked');
   } else {
+    alert('failed to log in. Please try again.');
     console.log('it did not work');
   }
 
