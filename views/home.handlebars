@@ -1,16 +1,19 @@
+{{!-- <h2>Welcome {{user.username}}</h2> --}}
 <div class="posts">
-    {{#each postData}}
+    {{#each postData as |post| }}
     <div class="card">
         <div class="card-body">
+            {{!-- {{#if post.loggedIn}} --}}
             <h2>
-                <a href="/post{{id}}">{{title}}</a>
+                <a href="/post/{{id}}">{{post.title}}</a>
             </h2>
+            {{!-- {{/if}} --}}
             <div>
-                Posted by {{user.username}} on {{format_date createdAt}}
-            </div>
+                Posted by {{post.user.username}} on {{format_date createdAt}}
+            </div>            
             <div class="cardBody">
-                {{content}}
-            </div>
+                {{post.content}}
+            </div>            
         </div>
     </div>
     {{/each}}

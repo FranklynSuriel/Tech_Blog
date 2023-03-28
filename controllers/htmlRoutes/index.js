@@ -1,42 +1,46 @@
 const router = require('express').Router();
 const { User, Post, Comments } = require('../../models');
+const withAuth = require('../../utils/auth');
 
-router.get('/', async (req, res) => {
+router.get('/home', async (req, res) => {
   try {
     const showAllPost = await Post.findAll({
-      attributes: ['id', 'title', 'content', 'createdAt'],
-      include: {
-        model: User,
-        attributes: ['id', 'username'],
-      },
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+      ],
     });
 
     if (!showAllPost) {
       res.status(400).json({ message: "No post available" })
     };
 
-    const postData = showAllPost.map((post) => {
-      return post.get({plain: true})
-    });
-    
+    const postData = showAllPost.map((post) => post.get({ plain: true }));
+    console.log(postData)
+    // console.log(loggedIn)
     res.render('home', {
       postData,
-      loggedIn: req.session.loggedIn,
-      userId: req.session.user_id,
-      postReader: req.session.username
+      loggedIn: req.session.loggedIn
     });
-  } catch(err) {
+    // } 
+  } catch (err) {
     res.status(500).json(err)
   }
-  
 });
-router.get('/home', async (req, res) => {
-  res.redirect('/');
+
+router.get('/', async (req, res) => {
+  res.redirect('/home');
+});
+
+router.get('/logout', async (req, res) => {
+  res.redirect('/home');
 });
 
 router.get('/login', async (req, res) => {
   if (req.session.loggedIn) {
-    res.redirect('/');
+    res.redirect('/home');
     return;
   }
   res.render('login');
@@ -44,10 +48,58 @@ router.get('/login', async (req, res) => {
 
 router.get('/dashboard', async (req, res) => {
   if (req.session.loggedIn) {
-    res.render('dashboard')
+    try {
+      console.log(req.session.userId)
+      const showUserPost = await Post.findAll({
+        where: {user_id: req.session.userId },        
+        include: [
+          { 
+            model: User,
+            attributes: ['username'],
+          },
+        ],
+      });
+
+      if (!showUserPost) {
+        res.status(400).json({ message: "No post available" })
+      };
+
+      const postData = showUserPost.map((post) => post.get({ plain: true }));
+
+      console.log(postData)
+      res.render('dashboard', {
+        postData,
+        loggedIn: req.session.loggedIn
+      });
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({ message:"dashboard error" });
+    }
+    return;   
+  }
+  res.redirect('/login');
+});
+
+router.get('/post/:id', async (req, res) => {
+  if (req.session.loggedIn) {
+    try {
+      const postData = await Post.findByPk(req.params.id, {
+        
+        include: [{ model: User, attributes: ['username'] }],
+      });
+
+      const post = postData.get({ plain: true });
+      console.log(post)
+      res.render('Post', {
+        ...post,
+        loggedIn: req.session.loggedIn
+      });
+    } catch (err) {
+      res.status(500).json(err);
+    }
     return;
   }
   res.redirect('/login');
-})
+});
 
 module.exports = router;
