@@ -7,11 +7,11 @@ const newPostHandler = async function (event) {
   const content = document.querySelector('#postContent').value;
 
   if (title && content) {
-    const response = await fetch('api/post', {
+    const response = await fetch('api/user/post', {
       method: 'POST',
       body: JSON.stringify({
         title,
-        content,
+        content,        
       }),
       headers: {
         'Content-Type': 'application/json',
