@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User, Post, Comments } = require('../../models');
+const { create } = require('../../models/user');
 const withAuth = require('../../utils/auth');
 
 router.get('/home', async (req, res) => {
@@ -51,9 +52,9 @@ router.get('/dashboard', async (req, res) => {
     try {
       console.log(req.session.userId)
       const showUserPost = await Post.findAll({
-        where: {user_id: req.session.userId },        
+        where: { user_id: req.session.user_id },
         include: [
-          { 
+          {
             model: User,
             attributes: ['username'],
           },
@@ -73,9 +74,9 @@ router.get('/dashboard', async (req, res) => {
       });
     } catch (err) {
       console.log(err)
-      res.status(500).json({ message:"dashboard error" });
+      res.status(500).json({ message: "dashboard error" });
     }
-    return;   
+    return;
   }
   res.redirect('/login');
 });
@@ -84,15 +85,25 @@ router.get('/post/:id', async (req, res) => {
   if (req.session.loggedIn) {
     try {
       const postData = await Post.findByPk(req.params.id, {
-        
-        include: [{ model: User, attributes: ['username'] }],
+        include: [
+          {
+            model: User,
+            attributes: ['username']
+          },
+          {
+            model: Comments,
+            include: [{ model: User }]
+          },
+        ],
       });
 
       const post = postData.get({ plain: true });
       console.log(post)
+      console.log(post.id)
       res.render('Post', {
         ...post,
-        loggedIn: req.session.loggedIn
+        loggedIn: req.session.loggedIn,
+        post_id: post.id
       });
     } catch (err) {
       res.status(500).json(err);

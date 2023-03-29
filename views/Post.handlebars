@@ -1,35 +1,37 @@
-{{!-- <div class="post card">
-  <div class="card-header">
-    <h2>Create New Post</h2>
-  </div>
-  <form class="card-body newPostForm">
-    <label class="form-label" for="post-title">Title</label>
-    <input type="text" name="post-title" class="form-input" id="postTitle"/>
-
-    <label class="form-label" for="post-body">Content</label>
-    <textarea name="post-body" class="form-input" id="postContent"></textarea>
-
-    <button type="submit" class="btn">Create</button>
-  </form>
-</div> --}}
-
-{{!-- <script src="/js/post.js"></script> --}}
-
 <div class="posts">
-    {{!-- {{#each post}} --}}
-    <div class="card">
-        <div class="card-body">
-            <h2>
-                <a href="/post/{{id}}">{{title}}</a>
-            </h2>
-            <div>
-                Posted by {{user.username}} on {{format_date createdAt}}
-            </div>
-            <div class="cardBody">
-                {{content}}
-            </div>
-        </div>
+  <div class="card">
+    <div class="card-body">
+      <h2>
+        <a href="/post/{{id}}">{{title}}</a>
+      </h2>
+      <div class="cardBody">
+        {{content}}
+      </div>
+      <div>
+        Posted by {{user.username}} on {{format_date createdAt}}
+      </div>
     </div>
-    {{> comment}}
-    {{!-- {{/each}} --}}
+  </div>
 </div>
+<div>
+  <form class="card-body newCommentForm">
+    <label class="form-label" for="post-body">Comment</label>
+    <textarea name="post-body" class="form-input" id="postComment"></textarea>
+    <button type="submit" class="btn">Create Comment</button>
+  </form>
+</div>
+{{!-- {{#if post.comments}} --}}
+<div class="comments">
+  <div class="card">
+    <div class="card-body">
+      <div class="cardBody">
+        {{comments}}
+      </div>
+      <div>
+        Posted by {{post.comments.user.username}} on {{format_date createdAt}}
+      </div>
+    </div>
+  </div>
+</div>
+{{!-- {{/if}} --}}
+<script src="/js/post.js"></script>

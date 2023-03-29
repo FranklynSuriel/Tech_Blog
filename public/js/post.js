@@ -1,28 +1,25 @@
-const newPostBtn = document.querySelector('.newPostBtn');
+const newCommentBtn = document.querySelector('.newCommentForm');
 
-const newPostHandler = async function (event) {
+const newCommentHandler = async function (event) {
   event.preventDefault();
 
-  const title = document.querySelector('#postTitle').value;
-  const content = document.querySelector('#postContent').value;
+  const comment = document.querySelector('#postComment').value;
 
-  if (title && content) {
-    const response = await fetch('api/user/post', {
+  if (comment) {
+    const response = await fetch('/api/user/comment', {
       method: 'POST',
-      body: JSON.stringify({
-        title,
-        content,        
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      body: JSON.stringify({ comment, }),
+      headers: { 'Content-Type': 'application/json' },
     });
+
     if (response.ok) {
       console.log('post created');
+      document.location.reload()
     } else {
       console.log('post not created');
+      alert('Failed to create new post')
     }
   }
 };
 
-newPostBtn.addEventListener('submit', newPostHandler);
+newCommentBtn.addEventListener('submit', newCommentHandler);
