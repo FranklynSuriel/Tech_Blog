@@ -1,17 +1,4 @@
-// const dashboard = document.querySelector('#dashboard');
 const newPostBtn = document.querySelector('.newPostForm');
-
-// async function handleDashboard(event) {
-//   event.preventDefault();
-
-//   const response = await fetch('api/user/dashboard');
-
-//   if (response.ok) {
-//     console.log('hello from dashboard');
-//   } else {
-//     console.log('dashboard did not work');
-//   }
-// }
 
 const newPostHandler =  async function (event) {
   event.preventDefault();
@@ -20,7 +7,7 @@ const newPostHandler =  async function (event) {
   const content = document.querySelector('#postContent').value;
 
   if (title && content) {
-    const response = await fetch('/api/post/dashboard', {
+    const response = await fetch('/api/user/dashboard', {
       method: 'POST',
       body: JSON.stringify({ title, content }),
       headers: { 'Content-Type': 'application/json' },
@@ -34,5 +21,4 @@ const newPostHandler =  async function (event) {
   }
 };
 
-// dashboard.addEventListener('click', handleDashboard);
 newPostBtn.addEventListener('submit', newPostHandler);

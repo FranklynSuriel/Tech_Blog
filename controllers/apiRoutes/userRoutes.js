@@ -1,6 +1,6 @@
 // import packages
 const router = require('express').Router();
-const { User } = require('../../models');
+const { User, Post, Comments } = require('../../models');
 
 router.post('/login', async (req, res) => {
     try {
@@ -17,7 +17,7 @@ router.post('/login', async (req, res) => {
         }
 
         req.session.save(() => {
-            req.session.userId = userData.id
+            req.session.user_id = userData.id
             // req.session.username = userData.name
             req.session.loggedIn = true;
             // loggedIn = req.session.loggedIn
@@ -55,6 +55,32 @@ router.post('/logout', (req, res) => {
     }
 });
 
+router.post('/dashboard', async (req, res) => {
+    try{
+        const newPost = await Post.create({
+            ...req.body,
+            user_id: req.session.user_id,            
+        });
 
+        res.status(200).json(newPost);
+    }catch (err) {
+        res.status(400).json(err);
+    }
+});
 
+router.post('/comment', async (req, res) => {
+    try{        
+        console.log(req.body)
+        const comment = await Comments.create({
+            ...req.body,
+            user_id: req.session.user_id,
+            post_id: 1         
+        });       
+
+        res.status(200).json(comment);
+
+    }catch (err) {
+        res.status(400).json(err);
+    }
+});
 module.exports = router;
