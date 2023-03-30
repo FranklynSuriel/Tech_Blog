@@ -47,70 +47,90 @@ router.get('/login', async (req, res) => {
   res.render('login');
 });
 
-router.get('/dashboard', async (req, res) => {
-  if (req.session.loggedIn) {
-    try {
-      console.log(req.session.userId)
-      const showUserPost = await Post.findAll({
-        where: { user_id: req.session.user_id },
-        include: [
-          {
-            model: User,
-            attributes: ['username'],
-          },
-        ],
-      });
+router.get('/dashboard', withAuth, async (req, res) => {
+  try {
+    console.log(req.session.userId)
+    const showUserPost = await Post.findAll({
+      where: { user_id: req.session.user_id },
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+      ],
+    });
 
-      if (!showUserPost) {
-        res.status(400).json({ message: "No post available" })
-      };
+    if (!showUserPost) {
+      res.status(400).json({ message: "No post available" })
+    };
 
-      const postData = showUserPost.map((post) => post.get({ plain: true }));
+    const postData = showUserPost.map((post) => post.get({ plain: true }));
 
-      console.log(postData)
-      res.render('dashboard', {
-        postData,
-        loggedIn: req.session.loggedIn
-      });
-    } catch (err) {
-      console.log(err)
-      res.status(500).json({ message: "dashboard error" });
-    }
-    return;
+    console.log(postData)
+    res.render('dashboard', {
+      postData,
+      loggedIn: req.session.loggedIn
+    });
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ message: "dashboard error" });
   }
-  res.redirect('/login');
 });
 
-router.get('/post/:id', async (req, res) => {
-  if (req.session.loggedIn) {
-    try {
-      const postData = await Post.findByPk(req.params.id, {
-        include: [
-          {
-            model: User, 
-            attributes: ['username'],            
-          },
-          {
-            model: Comments,
-            include: [{ model: User, attributes: ['username'] }]
-          },
-        ],
-      });
-      const post = postData.get({ plain: true });
-      console.log(post)
-      req.session.post_id = post.id
-      res.render('Post', {
-        ...post,
-        loggedIn: req.session.loggedIn,
-        post_id: req.session.post_id,
-        post_comments: post.comments
-      });
-    } catch (err) {
-      res.status(500).json(err);
-    }
-    return;
+router.get('/post/:id', withAuth, async (req, res) => {
+  try {
+    const postData = await Post.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+        {
+          model: Comments,
+          include: [{ model: User, attributes: ['username'] }]
+        },
+      ],
+    });
+    const post = postData.get({ plain: true });
+    console.log(post)
+    req.session.post_id = post.id
+    res.render('Post', {
+      ...post,
+      loggedIn: req.session.loggedIn,
+      post_id: req.session.post_id,
+      post_comments: post.comments
+    });
+  } catch (err) {
+    res.status(500).json(err);
   }
-  res.redirect('/login');
+});
+
+router.get('/dashboard/post/:id', withAuth, async (req, res) => {
+  try {
+    const postData = await Post.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+        {
+          model: Comments,
+          include: [{ model: User, attributes: ['username'] }]
+        },
+      ],
+    });
+    const post = postData.get({ plain: true });
+    console.log(post)
+    req.session.post_id = post.id
+    res.render('dashboardPost', {
+      ...post,
+      loggedIn: req.session.loggedIn,
+      post_id: req.session.post_id,
+      post_comments: post.comments
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;
