@@ -1,0 +1,37 @@
+<div class="posts">
+    <div class="card">
+        <div class="card-body">
+            <h2>
+                <a href="/post/{{id}}">{{title}}</a>
+            </h2>
+            <div class="cardBody">
+                {{content}}
+            </div>
+            <div>
+                <h5>Posted by {{user.username}} on {{format_date createdAt}}</h5>
+            </div>
+        </div>
+    </div>
+    <button class="btn updateBtn" data-id="{{id}}">Update Post</button>
+    <button class="btn deleteBtn" data-id="{{id}}">Delete Post</button>
+</div>
+
+<div>
+    <h2>Comments</h2>
+</div>
+
+{{#each post_comments}}
+<div class="comments">
+    <div class="card">
+        <div class="card-body">
+            <div class="cardBody">
+                {{comment}}
+            </div>
+            <div>
+                <h5>Posted by {{user.username}} on {{format_date createdAt}}</h5>
+            </div>
+        </div>
+    </div>
+</div>
+{{/each}}
+<script src="/js/dashboardPost.js"></script>
