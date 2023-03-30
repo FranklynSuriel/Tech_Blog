@@ -8,11 +8,12 @@
         {{content}}
       </div>
       <div>
-        Posted by {{user.username}} on {{format_date createdAt}}
+        <h5>Posted by {{user.username}} on {{format_date createdAt}}</h5>
       </div>
     </div>
   </div>
 </div>
+
 <div>
   <form class="card-body newCommentForm">
     <label class="form-label" for="post-body">Comment</label>
@@ -20,18 +21,23 @@
     <button type="submit" class="btn">Create Comment</button>
   </form>
 </div>
-{{!-- {{#if post.comments}} --}}
+
+<div>
+  <h2>Comments</h2>
+</div>
+
+{{#each post_comments}}
 <div class="comments">
   <div class="card">
     <div class="card-body">
       <div class="cardBody">
-        {{comments}}
+        {{comment}}
       </div>
       <div>
-        Posted by {{post.comments.user.username}} on {{format_date createdAt}}
+        <h5>Posted by {{user.username}} on {{format_date createdAt}}</h5>
       </div>
     </div>
   </div>
 </div>
-{{!-- {{/if}} --}}
+{{/each}}
 <script src="/js/post.js"></script>
