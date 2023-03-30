@@ -71,10 +71,11 @@ router.post('/dashboard', async (req, res) => {
 router.post('/comment', async (req, res) => {
     try{        
         console.log(req.body)
+        console.log(req.session)
         const comment = await Comments.create({
             ...req.body,
             user_id: req.session.user_id,
-            post_id: 1         
+            post_id: req.session.post_id         
         });       
 
         res.status(200).json(comment);
