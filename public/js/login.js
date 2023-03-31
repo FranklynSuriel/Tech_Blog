@@ -17,8 +17,8 @@ async function handleSignup(event) {
     });
     
     if (response.ok) {
-      document.location.replace('/');
       console.log('signed in');
+      document.location.replace('/home');      
     } else {
       alert('failed to log in. Please try again.');
       console.log('it did not work');
@@ -40,10 +40,12 @@ async function handleLogin(event) {
     });
     
     if (response.ok) {
-      document.location.replace('/');
       console.log('logged in')
+      document.location.replace('/home');
+      
     } else {
       alert('failed to log in. Please try again.');
+      console.log('it did not work')
     }
   }
 }

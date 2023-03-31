@@ -20,12 +20,13 @@ router.post('/login', async (req, res) => {
             res.status(404).json({ message: 'Invalid username or password' });
             return;
         }
-
+        console.log(userData)
         // save the session data
         req.session.save(() => {
             req.session.user_id = userData.id;
             req.session.loggedIn = true;
-            res.json({ userData, message: 'Logged in' });
+            console.log(req.session.loggedIn)
+            res.status(201).json({ userData, message: 'Logged in' });
         });
     } catch (err) {
         res.status(400).json(err);
@@ -36,13 +37,14 @@ router.post('/signup', async (req, res) => {
     try {
         // create a new user
         const userData = await User.create(req.body);
-        
+        console.log(userData)
         // save the session data
         req.session.save(() => {
             req.session.user_id = userData.id;
             req.session.loggedIn = true;
+            console.log(req.session.loggedIn)
 
-            res.status(200).json(userData);
+            res.status(201).json(userData);
         });
 
     } catch (err) {
