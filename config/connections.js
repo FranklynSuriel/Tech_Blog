@@ -24,7 +24,10 @@ const sequelize = process.env.JAWSDB_URL
 const expressSessionConfig = {
   secret: process.env.SESSION_SECRET,
   cookie: {
-    expires: new Date(Date.now() + 300000), // session expires after 5 minutes idle
+    maxAge:30000,
+    httpOnly: true,
+    secure: false,
+    sameSite: 'strict'
   },
   resave: false,
   saveUninitialized: true,
