@@ -24,7 +24,7 @@ const sequelize = process.env.JAWSDB_URL
 const expressSessionConfig = {
   secret: process.env.SESSION_SECRET,
   cookie: {
-    maxAge:30000,
+    maxAge:300000,
     httpOnly: true,
     secure: false,
     sameSite: 'strict'
