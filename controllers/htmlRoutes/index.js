@@ -5,6 +5,7 @@ const withAuth = require('../../utils/auth');
 
 router.get('/home', async (req, res) => {
   try {
+    // get all posts and JOIN with user data
     const showAllPost = await Post.findAll({
       include: [
         {
@@ -14,13 +15,15 @@ router.get('/home', async (req, res) => {
       ],
     });
 
+    // check if missing username or password
     if (!showAllPost) {
       res.status(400).json({ message: "No post available" })
     };
 
+    // serialize data so the template can read it
     const postData = showAllPost.map((post) => post.get({ plain: true }));
     
-    console.log(req.session.loggedIn)
+    // pass serialized data and session flag into template
     res.render('home', {
       postData,
       loggedIn: req.session.loggedIn
@@ -32,14 +35,17 @@ router.get('/home', async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
+  // redirect to home
   res.redirect('/home');
 });
 
 router.get('/logout', async (req, res) => {
+  // redirect to home
   res.redirect('/home');
 });
 
 router.get('/login', async (req, res) => {
+  // check is user is logged in
   if (req.session.loggedIn) {
     res.redirect('/home');
     return;
@@ -47,9 +53,10 @@ router.get('/login', async (req, res) => {
   res.render('login');
 });
 
+// Use withAuth middleware to prevent access to route
 router.get('/dashboard', withAuth, async (req, res) => {
   try {
-    console.log(req.session.userId)
+    // find all post where user id match and JOIN the user data
     const showUserPost = await Post.findAll({
       where: { user_id: req.session.user_id },
       include: [
@@ -62,11 +69,12 @@ router.get('/dashboard', withAuth, async (req, res) => {
 
     if (!showUserPost) {
       res.status(400).json({ message: "No post available" })
+      return;
     };
-
+    // Serialize data so the template can read it
     const postData = showUserPost.map((post) => post.get({ plain: true }));
 
-    console.log(postData)
+    // Pass serialized data and session flag into template
     res.render('dashboard', {
       postData,
       loggedIn: req.session.loggedIn
@@ -77,8 +85,10 @@ router.get('/dashboard', withAuth, async (req, res) => {
   }
 });
 
+// router to find any post by id 
 router.get('/post/:id', withAuth, async (req, res) => {
   try {
+    // find the post that matches the id and JOIN user data and comment data
     const postData = await Post.findByPk(req.params.id, {
       include: [
         {
@@ -91,9 +101,12 @@ router.get('/post/:id', withAuth, async (req, res) => {
         },
       ],
     });
+    // Serialize data so the template can read it
     const post = postData.get({ plain: true });
-    console.log(post)
+    
+    // save the post.id
     req.session.post_id = post.id
+    // Pass serialized data and session flag into template
     res.render('Post', {
       ...post,
       loggedIn: req.session.loggedIn,
@@ -105,8 +118,12 @@ router.get('/post/:id', withAuth, async (req, res) => {
   }
 });
 
+// router to find user post by id
+// it look similar to the previous route, but this route is exclusive to the logged in user
+// this router is use to render dashboardPost.handlebars which allow the user to update or deleted the selected post
 router.get('/dashboard/post/:id', withAuth, async (req, res) => {
   try {
+    // find the post that matches the id and JOIN user data and comment data
     const postData = await Post.findByPk(req.params.id, {
       include: [
         {
@@ -119,9 +136,11 @@ router.get('/dashboard/post/:id', withAuth, async (req, res) => {
         },
       ],
     });
+    // Serialize data so the template can read it
     const post = postData.get({ plain: true });
-    console.log(post)
+    // save the post.id
     req.session.post_id = post.id
+    // Pass serialized data and session flag into template
     res.render('dashboardPost', {
       ...post,
       loggedIn: req.session.loggedIn,

@@ -1,9 +1,8 @@
+{{!-- create a card to display the selected post --}}
 <div class="posts">
   <div class="card">
     <div class="card-body">
-      <h2>
-        <a href="/post/{{id}}">{{title}}</a>
-      </h2>
+      <h2>{{title}}</h2>
       <div class="cardBody">
         {{content}}
       </div>
@@ -13,7 +12,7 @@
     </div>
   </div>
 </div>
-
+{{!-- create a form to enter comment to the selected post --}}
 <div>
   <form class="card-body newCommentForm">
     <label class="form-label" for="post-body">Comment</label>
@@ -23,9 +22,9 @@
 </div>
 
 <div>
-  <h2>Comments</h2>
+  <h3>Comments</h3>
 </div>
-
+{{!-- create a card to show each message if available --}}
 {{#each post_comments}}
 <div class="comments">
   <div class="card">

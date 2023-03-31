@@ -5,7 +5,7 @@ const updateBtn = document.querySelector('.updateBtn')
 const updateHandler = function (event) {
     event.preventDefault();
 
-    console.log('I have been clicked')   
+    // create the form elements to update a post
     const updateButton = document.querySelector('.posts')
     const container = document.createElement('div');
     const update = document.createElement('h2');
@@ -16,14 +16,12 @@ const updateHandler = function (event) {
     const contentTextArea = document.createElement('textarea');
     const button = document.createElement('button');
 
-    console.log(button)
-
-    
+    // set class to the elements
     titleTextArea.classList.add('post_title');
     contentTextArea.classList.add('content');
-    button.classList.add('btn','data-id="{{id}}', 'edit-post-form');
+    button.classList.add('btn', 'data-id="{{id}}', 'edit-post-form');
 
-    
+    // append
     updateButton.append(container);
     container.appendChild(update);
     container.appendChild(form);
@@ -33,18 +31,20 @@ const updateHandler = function (event) {
     form.appendChild(contentTextArea);
     form.appendChild(button);
 
+    // text content
     update.textContent = "Update Post"
-    titleLabel.textContent = "Title"    
-    contentLabel.textContent = "Content"    
+    titleLabel.textContent = "Title"
+    contentLabel.textContent = "Content"
     button.textContent = 'submit'
 
 }
 
 const deletePostHandler = async function (event) {
     event.preventDefault();
+    // get the post id
     if (event.target.hasAttribute('data-id')) {
         const id = event.target.getAttribute('data-id');
-
+        // sent a delete request to the API endpoint
         const response = await fetch(`/api/user/${id}`, {
             method: 'DELETE',
         });
@@ -59,16 +59,15 @@ const deletePostHandler = async function (event) {
 
 const updatePostHandler = async function (event) {
     event.preventDefault();
-    
-    const title = document.querySelector('.post_title').value;
-    console.log(title)
-    const content = document.querySelector('.content').value;
-    console.log(event.target)
-    
-    if (event.target.hasAttribute('data-id')) {
-        const id = event.target.getAttribute('data-id');
-        console.log(id)
 
+    const title = document.querySelector('.post_title').value;
+    const content = document.querySelector('.content').value;
+
+    // get the post id
+    if (event.target.hasAttribute('data-id')) {
+        const id = event.target.getAttribute('data-id');        
+
+        // sent a put request to the API endpoint
         const response = await fetch(`/api/user/update/${id}`, {
             method: 'PUT',
             body: JSON.stringify({ title, content }),

@@ -1,3 +1,4 @@
+{{!-- Create a form to create a new post --}}
 <div class="post card">
     <div class="card-header">
         <h2>Create New Post</h2>
@@ -5,32 +6,30 @@
     <form class="card-body newPostForm">
         <label class="form-label" for="post-title">Title</label>
         <input type="text" name="post-title" class="form-input" id="postTitle" />
-
         <label class="form-label" for="post-body">Content</label>
         <textarea name="post-body" class="form-input" id="postContent"></textarea>
-
         <button type="submit" class="btn">Create</button>
     </form>
 </div>
 
 <div>
-    <h2>Recent Post</h2>
+    <h3>Recent Post</h3>
 </div>
 
+{{!-- create a card to render each post --}}
 <div class="posts">
     {{#each postData as |post|}}
     <div class="card">
         <div class="card-body">
             <h2>
-                <a href="/dashboard/post/{{id}}">{{post.title}}</a>
+                <a href="/dashboard/post/{{id}}">{{post.title}}</a> {{!--use /dashboard/post/:id router to show only posts of user--}}
             </h2>
             <div class="cardBody">
                 {{post.content}}
             </div>            
             <div>
-                Posted by {{post.user.username}} on {{format_date createdAt}}
+                <h5>Posted by {{post.user.username}} on {{format_date createdAt}}</h5>
             </div>
-
         </div>
     </div>
     {{/each}}

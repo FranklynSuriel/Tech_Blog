@@ -6,6 +6,7 @@ const newCommentHandler = async function (event) {
   const comment = document.querySelector('#postComment').value;
 
   if (comment) {
+    // sent a post request to the API endpoint
     const response = await fetch('/api/user/comment', {
       method: 'POST',
       body: JSON.stringify({ comment, }),
