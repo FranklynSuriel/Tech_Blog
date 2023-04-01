@@ -33,6 +33,7 @@ This application requires the following packages:
 ## Usage
 
 Deployed site here: [https://glacial-headland-83578.herokuapp.com/](https://glacial-headland-83578.herokuapp.com/home)
+Github repository site here: [https://github.com/FranklynSuriel/Tech_Blog](https://github.com/FranklynSuriel/Tech_Blog)
 
 Introducing our new CMS-style blog site!
 
