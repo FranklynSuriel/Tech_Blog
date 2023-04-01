@@ -17,8 +17,9 @@ const updateHandler = function (event) {
     const button = document.createElement('button');
 
     // set class to the elements
-    titleTextArea.classList.add('post_title');
-    contentTextArea.classList.add('content');
+    container.classList.add('card')
+    titleTextArea.classList.add('post_title', 'form-input');
+    contentTextArea.classList.add('content', 'form-input');
     button.classList.add('btn', 'data-id="{{id}}', 'edit-post-form');
 
     // append
