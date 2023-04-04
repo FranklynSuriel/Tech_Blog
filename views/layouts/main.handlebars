@@ -37,6 +37,9 @@
     </nav>
     <main class="container container-fluid mt-5">        
         <!-- Render the sub layout -->
+        {{#if username}}
+        <h2>Welcome {{username}}</h2>
+        {{/if}}
         {{{ body }}}
     </main>
     {{!-- link to logout.js after user logged in --}}
